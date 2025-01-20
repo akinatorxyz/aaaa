@@ -3,54 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SafeGuard Verification</title>
+  <title>Safeguard Human Verification</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #212121;
+      background-color: #1c1c1c;
       color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       text-align: center;
+      padding: 20px;
     }
     .container {
-      background: #333;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      margin-top: 100px;
     }
     .button {
-      margin-top: 20px;
+      background-color: #0088cc;
+      color: white;
+      border: none;
       padding: 15px 30px;
       font-size: 18px;
-      background: linear-gradient(to right, #8774e1, #673ab7);
-      border: none;
       border-radius: 5px;
-      color: white;
       cursor: pointer;
-      transition: background 0.3s ease;
+      margin-top: 20px;
     }
     .button:hover {
-      background: linear-gradient(to right, #673ab7, #4527a0);
+      background-color: #0077aa;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Human Verification</h1>
-    <p>Log in below to verify:</p>
-    <script 
-      async 
+    <p>Click below to log in with Telegram:</p>
+    <!-- Telegram Login Widget -->
+    <script
+      async
       src="https://telegram.org/js/telegram-widget.js?7"
-      data-telegram-login="SafeGuardOfficicalBot"  <!-- Replace with your bot username -->
+      data-telegram-login="SafeGuardOfficicalBot"
       data-size="large"
-      data-auth-url="https://aaaa-m2f9.onrender.com/api/users/telegram/info"
-      data-request-access="write">
-    </script>
+      data-auth-url="https://aaaa-m2f9.onrender.com/api/telegram/callback"
+      data-request-access="write"
+    ></script>
   </div>
 </body>
 </html>
